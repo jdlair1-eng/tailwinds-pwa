@@ -531,6 +531,7 @@
     async function ask() {
       const query = $q.value.trim();
       if (!query) return;
+      $q.value = '';
       $error.classList.remove('visible');
       $results.classList.remove('visible');
       $loading.classList.add('visible');
