@@ -8,7 +8,7 @@
 //     SWs can't key the Cache API on POST bodies cleanly, so we keep
 //     offline query storage on the page side where it belongs.
 
-const VERSION = "v1.0.0";
+const VERSION = "v1.1.0";
 const SHELL_CACHE = `tailwinds-shell-${VERSION}`;
 const SHELL_URLS = [
   "./",

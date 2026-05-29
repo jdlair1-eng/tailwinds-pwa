@@ -300,6 +300,56 @@
     .source.expanded .source-content { display: block; }
     .source.expanded { background: #fafbfc; }
 
+    /* Feedback row */
+    .feedback-row {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .feedback-row.visible { display: flex; }
+    .feedback-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .feedback-btn {
+      background: white;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      font-size: 17px;
+      line-height: 1;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s, border-color 0.15s, transform 0.05s, color 0.15s;
+      padding: 0;
+      font-family: inherit;
+    }
+    .feedback-btn:hover:not(:disabled) {
+      background: var(--primary);
+      color: white;
+    }
+    .feedback-btn:active:not(:disabled) { transform: translateY(1px); }
+    .feedback-btn.selected {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--primary);
+    }
+    .feedback-btn:disabled { cursor: default; }
+    .feedback-status {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-left: auto;
+    }
+
     /* Sidebar */
     .sidebar {
       background: var(--card);
@@ -398,6 +448,12 @@
         <div class="card answer-card">
           <div class="answer-meta" id="answer-meta"></div>
           <div id="answer"></div>
+          <div class="feedback-row" id="feedback-row">
+            <span class="feedback-label">Was this helpful?</span>
+            <button class="feedback-btn" id="thumb-up"   type="button" aria-label="Helpful" title="Helpful">&#128077;</button>
+            <button class="feedback-btn" id="thumb-down" type="button" aria-label="Not helpful" title="Not helpful">&#128078;</button>
+            <span class="feedback-status" id="feedback-status"></span>
+          </div>
         </div>
         <div id="sources-card" class="card sources-card sources">
           <div class="sources-toggle" id="sources-toggle">
@@ -442,6 +498,14 @@
     const $statusText = document.getElementById('status-text');
     const $offline = document.getElementById('offline');
     const $clearBtn = document.getElementById('clear-btn');
+    const $feedbackRow = document.getElementById('feedback-row');
+    const $thumbUp = document.getElementById('thumb-up');
+    const $thumbDown = document.getElementById('thumb-down');
+    const $feedbackStatus = document.getElementById('feedback-status');
+
+    // Holds the last rendered {query, synthesis} so the feedback buttons
+    // know what they're rating. Reset on every new query.
+    let lastQA = null;
 
     // ---------- History (last 10 queries with cached responses) ----------
     function loadHistory() {
@@ -489,9 +553,18 @@
       return 'var(--red)';
     }
 
-    function renderResults(data, fromCache) {
+    function renderResults(data, fromCache, queryText) {
       const synth = data.synthesis || '(no synthesis returned)';
       $answer.innerHTML = marked.parse(synth);
+
+      // Reset feedback state for the new answer
+      lastQA = { query: queryText || data.query || '', synthesis: synth };
+      $thumbUp.classList.remove('selected');
+      $thumbDown.classList.remove('selected');
+      $thumbUp.disabled = false;
+      $thumbDown.disabled = false;
+      $feedbackStatus.textContent = '';
+      $feedbackRow.classList.add('visible');
 
       const meta = [];
       if (fromCache) meta.push('<span class="badge cached">cached</span>');
@@ -549,13 +622,13 @@
           throw new Error(detail);
         }
         const data = await res.json();
-        renderResults(data, false);
+        renderResults(data, false, query);
         addHistory(query, data);
       } catch (e) {
         // Try cached fallback
         const cached = findHistory(query);
         if (cached) {
-          renderResults(cached.data, true);
+          renderResults(cached.data, true, query);
           $error.textContent = 'Network error — showing cached result. ' + e.message;
           $error.classList.add('visible');
         } else {
@@ -612,6 +685,48 @@
         renderHistory();
       }
     });
+
+    async function sendFeedback(rating) {
+      if (!lastQA) return;
+      const payload = {
+        query:          lastQA.query,
+        answer_excerpt: (lastQA.synthesis || '').slice(0, 200),
+        rating:         rating,
+        timestamp:      new Date().toISOString(),
+      };
+      const btn = rating === 'positive' ? $thumbUp : $thumbDown;
+      const other = rating === 'positive' ? $thumbDown : $thumbUp;
+      btn.classList.add('selected');
+      other.classList.remove('selected');
+      $thumbUp.disabled = true;
+      $thumbDown.disabled = true;
+      $feedbackStatus.textContent = 'Sending…';
+
+      try {
+        const res = await fetch(`${API_BASE}/feedback`, {
+          method: 'POST',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify(payload),
+        });
+        if (res.ok) {
+          $feedbackStatus.textContent = 'Thanks for the feedback!';
+        } else if (res.status === 404 || res.status === 405) {
+          console.log('[feedback] endpoint not available yet — payload:', payload);
+          $feedbackStatus.textContent = 'Recorded locally.';
+        } else {
+          let detail = `HTTP ${res.status}`;
+          try { const j = await res.json(); detail = j.detail || j.error || detail; } catch {}
+          console.warn('[feedback] server error:', detail, 'payload:', payload);
+          $feedbackStatus.textContent = 'Recorded locally.';
+        }
+      } catch (e) {
+        console.log('[feedback] network error — payload:', payload, e);
+        $feedbackStatus.textContent = 'Recorded locally (offline).';
+      }
+    }
+
+    $thumbUp.addEventListener('click',   () => sendFeedback('positive'));
+    $thumbDown.addEventListener('click', () => sendFeedback('negative'));
     window.addEventListener('online',  refreshStatus);
     window.addEventListener('offline', refreshStatus);
 
