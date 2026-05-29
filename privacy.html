@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1B3A6B">
+  <meta name="description" content="HachikoLove privacy policy — what we collect, what we don't, and how we use it. In plain language.">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%231B3A6B'/%3E%3Cellipse cx='50' cy='68' rx='22' ry='18' fill='%23F5C518'/%3E%3Cellipse cx='28' cy='38' rx='8' ry='10' fill='%23F5C518'/%3E%3Cellipse cx='50' cy='28' rx='8' ry='11' fill='%23F5C518'/%3E%3Cellipse cx='72' cy='38' rx='8' ry='10' fill='%23F5C518'/%3E%3Cellipse cx='18' cy='58' rx='7' ry='9' fill='%23F5C518'/%3E%3Cellipse cx='82' cy='58' rx='7' ry='9' fill='%23F5C518'/%3E%3C/svg%3E">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%231B3A6B'/%3E%3Cellipse cx='50' cy='68' rx='22' ry='18' fill='%23F5C518'/%3E%3Cellipse cx='28' cy='38' rx='8' ry='10' fill='%23F5C518'/%3E%3Cellipse cx='50' cy='28' rx='8' ry='11' fill='%23F5C518'/%3E%3Cellipse cx='72' cy='38' rx='8' ry='10' fill='%23F5C518'/%3E%3Cellipse cx='18' cy='58' rx='7' ry='9' fill='%23F5C518'/%3E%3Cellipse cx='82' cy='58' rx='7' ry='9' fill='%23F5C518'/%3E%3C/svg%3E">
+  <title>Privacy &mdash; HachikoLove</title>
+  <style>
+    :root {
+      --primary: #1B3A6B;
+      --primary-dark: #0f2444;
+      --accent: #F5C518;
+      --accent-dark: #d4a800;
+      --bg: #f5f6f8;
+      --card: #ffffff;
+      --text: #1a1a2e;
+      --text-muted: #6b7280;
+      --text-warm: #555b6b;
+      --border: #e5e7eb;
+      --safe-top: env(safe-area-inset-top, 0);
+      --safe-bottom: env(safe-area-inset-bottom, 0);
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      display: flex;
+      flex-direction: column;
+    }
+    .nav {
+      background: var(--primary);
+      color: white;
+      padding: calc(14px + var(--safe-top)) 20px 14px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .brand-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: white;
+      min-width: 0;
+    }
+    .logo {
+      width: 42px; height: 42px;
+      background: var(--primary-dark);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      border: 2px solid var(--accent);
+      flex-shrink: 0;
+    }
+    .logo svg { fill: var(--accent); width: 24px; height: 24px; }
+    .brand-text { line-height: 1.2; min-width: 0; }
+    .brand-name { font-size: 19px; font-weight: 700; letter-spacing: 0.01em; }
+    .brand-tagline {
+      font-size: 12px;
+      opacity: 0.82;
+      margin-top: 2px;
+      font-weight: 400;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    @media (max-width: 380px) {
+      .brand-tagline { font-size: 11px; }
+    }
+
+    .page {
+      flex: 1;
+      width: 100%;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 40px 24px 16px;
+    }
+    @media (max-width: 540px) {
+      .page { padding: 26px 18px 8px; }
+    }
+    .page h1 {
+      color: var(--primary);
+      font-size: 30px;
+      margin: 0 0 10px;
+      letter-spacing: -0.01em;
+    }
+    .page-intro {
+      color: var(--text-warm);
+      font-size: 17px;
+      font-style: italic;
+      margin: 0 0 12px;
+    }
+    .effective {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin: 0 0 36px;
+    }
+    .page section { margin-bottom: 30px; }
+    .page section h2 {
+      color: var(--primary);
+      font-size: 19px;
+      margin: 0 0 10px;
+    }
+    .page section p {
+      margin: 0 0 12px;
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+    .page section ul {
+      margin: 8px 0 12px;
+      padding-left: 22px;
+      color: var(--text);
+    }
+    .page section li {
+      margin: 6px 0;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    a.email-link {
+      color: var(--primary);
+      font-weight: 600;
+      text-decoration: none;
+      border-bottom: 1px dashed var(--primary);
+    }
+    a.email-link:hover { color: var(--accent-dark); border-color: var(--accent-dark); }
+
+    .site-footer {
+      border-top: 1px solid var(--border);
+      margin-top: 40px;
+      padding: 30px 20px calc(28px + var(--safe-bottom));
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 13px;
+      background: white;
+    }
+    .footer-line1 {
+      margin: 0 0 10px 0;
+      color: var(--text-warm);
+      font-style: italic;
+      line-height: 1.6;
+    }
+    .footer-links { margin: 0 0 10px 0; }
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 0 4px;
+    }
+    .footer-links a:hover { color: var(--primary); }
+    .footer-copy { margin: 0; font-size: 12px; opacity: 0.7; }
+  </style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1821832990547015"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+  <nav class="nav">
+    <a href="./" class="brand-link" aria-label="HachikoLove home">
+      <div class="logo" aria-hidden="true">
+        <svg viewBox="0 0 100 100">
+          <ellipse cx="50" cy="68" rx="22" ry="18"/>
+          <ellipse cx="28" cy="38" rx="8" ry="10"/>
+          <ellipse cx="50" cy="28" rx="8" ry="11"/>
+          <ellipse cx="72" cy="38" rx="8" ry="10"/>
+          <ellipse cx="18" cy="58" rx="7" ry="9"/>
+          <ellipse cx="82" cy="58" rx="7" ry="9"/>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <div class="brand-name">HachikoLove</div>
+        <div class="brand-tagline">Dog of love. Love of dogs. ...cats too.</div>
+      </div>
+    </a>
+  </nav>
+
+  <main class="page">
+    <h1>Privacy</h1>
+    <p class="page-intro">In plain language, what we collect, what we don't, and what we do with it.</p>
+    <p class="effective">Effective date: May 2026</p>
+
+    <section>
+      <h2>What we collect</h2>
+      <ul>
+        <li>The questions you ask HachikoLove.</li>
+        <li>Your feedback ratings (the thumbs up or thumbs down) and any comments you choose to share.</li>
+        <li>Your email address &mdash; only if you choose to subscribe to our newsletter.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>What we do not collect</h2>
+      <ul>
+        <li>Your name.</li>
+        <li>Your pet's name.</li>
+        <li>Your location.</li>
+        <li>Any other personal identifying information.</li>
+      </ul>
+      <p>We do not ask, we do not store, we do not need it to answer a question about your pet.</p>
+    </section>
+
+    <section>
+      <h2>How we use what we collect</h2>
+      <ul>
+        <li>To improve our answers and make HachikoLove more helpful over time.</li>
+        <li>To send our newsletter to the people who have asked for it.</li>
+        <li>To understand which topics matter most to pet owners, so we can write better content.</li>
+      </ul>
+      <p>We do not sell anything to anyone.</p>
+    </section>
+
+    <section>
+      <h2>Google AdSense and Google Analytics</h2>
+      <p>We use Google AdSense to show advertisements on HachikoLove. Ads help keep this site free for everyone. We use Google Analytics to understand how people find and use HachikoLove so we can keep making it better.</p>
+      <p>Google may use cookies to show you ads that are relevant to your interests. You can review or opt out of personalized advertising at any time through your <a class="email-link" href="https://adssettings.google.com/" rel="noopener" target="_blank">Google Ads Settings</a>. You can also turn off cookies in your browser.</p>
+    </section>
+
+    <section>
+      <h2>Third-party services</h2>
+      <p>To answer your questions, we use two outside services:</p>
+      <ul>
+        <li><strong>Anthropic</strong> &mdash; the AI that writes the answers you read.</li>
+        <li><strong>Voyage AI</strong> &mdash; the search engine that finds the right information behind each answer.</li>
+      </ul>
+      <p>When you ask a question, the text of your question is sent to these services so they can do their work. We do not send them anything about who you are.</p>
+    </section>
+
+    <section>
+      <h2>How long we keep data</h2>
+      <p>Feedback comments and the log of questions asked are kept for up to twelve months. After that, they are deleted. We do not archive them. We do not sell them.</p>
+    </section>
+
+    <section>
+      <h2>Your rights</h2>
+      <p>If you ever want us to delete anything we have stored about you or that came from you, email <a class="email-link" href="mailto:hello@hachikolove.com">hello@hachikolove.com</a>. We will take care of it &mdash; no friction, no forms, no explanations needed.</p>
+    </section>
+
+    <section>
+      <h2>Contact</h2>
+      <p>Questions about this policy, or about anything else? Email <a class="email-link" href="mailto:hello@hachikolove.com">hello@hachikolove.com</a> &mdash; a real person will read it.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p class="footer-line1">Made with love for every dog who waits. And every cat who noticed.</p>
+    <p class="footer-links">
+      <a href="/about">About</a> &middot;
+      <a href="/privacy">Privacy</a> &middot;
+      <a href="/contact">Contact</a>
+    </p>
+    <p class="footer-copy">&copy; 2026 HachikoLove</p>
+  </footer>
+</body>
+</html>

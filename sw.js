@@ -8,11 +8,14 @@
 //     SWs can't key the Cache API on POST bodies cleanly, so we keep
 //     offline query storage on the page side where it belongs.
 
-const VERSION = "v3.1.0";
+const VERSION = "v3.2.0";
 const SHELL_CACHE = `hachikolove-shell-${VERSION}`;
 const SHELL_URLS = [
   "./",
   "./index.html",
+  "./about.html",
+  "./privacy.html",
+  "./contact.html",
   "./manifest.json",
   "https://cdn.jsdelivr.net/npm/marked/marked.min.js",
 ];

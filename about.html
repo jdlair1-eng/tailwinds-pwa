@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1B3A6B">
+  <meta name="description" content="The Hachiko story, and why HachikoLove exists — a free resource for dog and cat owners.">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%231B3A6B'/%3E%3Cellipse cx='50' cy='68' rx='22' ry='18' fill='%23F5C518'/%3E%3Cellipse cx='28' cy='38' rx='8' ry='10' fill='%23F5C518'/%3E%3Cellipse cx='50' cy='28' rx='8' ry='11' fill='%23F5C518'/%3E%3Cellipse cx='72' cy='38' rx='8' ry='10' fill='%23F5C518'/%3E%3Cellipse cx='18' cy='58' rx='7' ry='9' fill='%23F5C518'/%3E%3Cellipse cx='82' cy='58' rx='7' ry='9' fill='%23F5C518'/%3E%3C/svg%3E">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%231B3A6B'/%3E%3Cellipse cx='50' cy='68' rx='22' ry='18' fill='%23F5C518'/%3E%3Cellipse cx='28' cy='38' rx='8' ry='10' fill='%23F5C518'/%3E%3Cellipse cx='50' cy='28' rx='8' ry='11' fill='%23F5C518'/%3E%3Cellipse cx='72' cy='38' rx='8' ry='10' fill='%23F5C518'/%3E%3Cellipse cx='18' cy='58' rx='7' ry='9' fill='%23F5C518'/%3E%3Cellipse cx='82' cy='58' rx='7' ry='9' fill='%23F5C518'/%3E%3C/svg%3E">
+  <title>About HachikoLove</title>
+  <style>
+    :root {
+      --primary: #1B3A6B;
+      --primary-dark: #0f2444;
+      --accent: #F5C518;
+      --accent-dark: #d4a800;
+      --bg: #f5f6f8;
+      --card: #ffffff;
+      --text: #1a1a2e;
+      --text-muted: #6b7280;
+      --text-warm: #555b6b;
+      --border: #e5e7eb;
+      --safe-top: env(safe-area-inset-top, 0);
+      --safe-bottom: env(safe-area-inset-bottom, 0);
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Nav (matches index.html) */
+    .nav {
+      background: var(--primary);
+      color: white;
+      padding: calc(14px + var(--safe-top)) 20px 14px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .brand-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: white;
+      min-width: 0;
+    }
+    .logo {
+      width: 42px; height: 42px;
+      background: var(--primary-dark);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      border: 2px solid var(--accent);
+      flex-shrink: 0;
+    }
+    .logo svg { fill: var(--accent); width: 24px; height: 24px; }
+    .brand-text { line-height: 1.2; min-width: 0; }
+    .brand-name { font-size: 19px; font-weight: 700; letter-spacing: 0.01em; }
+    .brand-tagline {
+      font-size: 12px;
+      opacity: 0.82;
+      margin-top: 2px;
+      font-weight: 400;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    @media (max-width: 380px) {
+      .brand-tagline { font-size: 11px; }
+    }
+
+    /* Page content */
+    .page {
+      flex: 1;
+      width: 100%;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 40px 24px 16px;
+    }
+    @media (max-width: 540px) {
+      .page { padding: 26px 18px 8px; }
+    }
+
+    .page h1 {
+      color: var(--primary);
+      font-size: 30px;
+      margin: 0 0 10px;
+      letter-spacing: -0.01em;
+    }
+    .page-intro {
+      color: var(--text-warm);
+      font-size: 17px;
+      font-style: italic;
+      margin: 0 0 36px;
+    }
+    .page section {
+      margin-bottom: 38px;
+    }
+    .page section h2 {
+      color: var(--primary);
+      font-size: 21px;
+      margin: 0 0 12px;
+      letter-spacing: -0.005em;
+    }
+    .page section p {
+      margin: 0 0 14px;
+      color: var(--text);
+      font-size: 17px;
+      line-height: 1.7;
+    }
+    .page section p em {
+      color: var(--text-warm);
+      font-style: italic;
+    }
+
+    .closing {
+      text-align: center;
+      margin-top: 48px;
+      padding: 32px 8px 8px;
+      border-top: 1px solid var(--border);
+    }
+    .closing-line {
+      font-style: italic;
+      color: var(--text-warm);
+      font-size: 18px;
+      margin: 0 0 26px;
+      line-height: 1.5;
+    }
+    .cta-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: var(--primary);
+      font-weight: 700;
+      text-decoration: none;
+      padding: 14px 30px;
+      border-radius: 9px;
+      font-size: 16px;
+      transition: background 0.15s, transform 0.05s;
+      font-family: inherit;
+    }
+    .cta-btn:hover  { background: var(--accent-dark); }
+    .cta-btn:active { transform: translateY(1px); }
+
+    /* Footer (matches index.html) */
+    .site-footer {
+      border-top: 1px solid var(--border);
+      margin-top: 40px;
+      padding: 30px 20px calc(28px + var(--safe-bottom));
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 13px;
+      background: white;
+    }
+    .footer-line1 {
+      margin: 0 0 10px 0;
+      color: var(--text-warm);
+      font-style: italic;
+      line-height: 1.6;
+    }
+    .footer-links { margin: 0 0 10px 0; }
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 0 4px;
+    }
+    .footer-links a:hover { color: var(--primary); }
+    .footer-copy { margin: 0; font-size: 12px; opacity: 0.7; }
+  </style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1821832990547015"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+  <nav class="nav">
+    <a href="./" class="brand-link" aria-label="HachikoLove home">
+      <div class="logo" aria-hidden="true">
+        <svg viewBox="0 0 100 100">
+          <ellipse cx="50" cy="68" rx="22" ry="18"/>
+          <ellipse cx="28" cy="38" rx="8" ry="10"/>
+          <ellipse cx="50" cy="28" rx="8" ry="11"/>
+          <ellipse cx="72" cy="38" rx="8" ry="10"/>
+          <ellipse cx="18" cy="58" rx="7" ry="9"/>
+          <ellipse cx="82" cy="58" rx="7" ry="9"/>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <div class="brand-name">HachikoLove</div>
+        <div class="brand-tagline">Dog of love. Love of dogs. ...cats too.</div>
+      </div>
+    </a>
+  </nav>
+
+  <main class="page">
+    <h1>About HachikoLove</h1>
+    <p class="page-intro">A hundred-year-old story about a dog who waited, and what it has to do with us.</p>
+
+    <section>
+      <h2>The Dog Who Waited</h2>
+      <p>In 1924, a white Akita puppy named Hachiko arrived in Tokyo and became the devoted companion of Professor Hidesaburo Ueno. Every morning Hachiko walked with the Professor to Shibuya Station and waited for his return every evening.</p>
+      <p>In May 1925, the Professor died suddenly at work. But Hachiko kept coming back to the station every single day for nine years, nine months, and fifteen days &mdash; until he died in 1935. Still waiting. Still faithful.</p>
+      <p>The statue of Hachiko outside Shibuya Station is today the most popular meeting spot in Tokyo.</p>
+    </section>
+
+    <section>
+      <h2>A Hundred Years Later</h2>
+      <p>Every morning millions of dogs watch their owners leave for work. They wait at the window. They lie by the door. They carry a shoe to a corner of the room. They wait &mdash; not for nine years, just for eight hours. But the love behind that wait is just as real as Hachiko's.</p>
+      <p>And every devoted dog owner carries a quiet question through their day &mdash; <em>is my dog okay? Does she know I am coming back?</em></p>
+    </section>
+
+    <section>
+      <h2>What We Are</h2>
+      <p>HachikoLove is a free resource for dog and cat owners who work, who travel, who have lives that do not always include their pets &mdash; and who want to make every hour their animal spends waiting a little better.</p>
+      <p>We give owners the knowledge to make the wait better. The science of what your dog actually experiences. The practical steps that reduce stress.</p>
+      <p>We are not here to judge anyone for leaving. Life requires it. We are here to help.</p>
+    </section>
+
+    <section>
+      <h2>The Name</h2>
+      <p>We chose Hachiko's name because his story is the purest expression of something every dog owner knows. The love between a dog and their person does not have an off switch. It does not pause when you are at work.</p>
+      <p>Hachiko waited because he loved. Your dog waits because they love. HachikoLove exists to honor that.</p>
+    </section>
+
+    <section>
+      <h2>Cats Too</h2>
+      <p>Dogs wait at the door. Cats watch from the couch and pretend not to notice you were gone.</p>
+      <p>Dogs love unconditionally. Cats trust but verify.</p>
+      <p>Dogs are easy to love. Cats require codependency.</p>
+      <p>We love them both. Unconditionally. Even the cats.</p>
+    </section>
+
+    <section class="closing">
+      <p class="closing-line">HachikoLove. For every dog who waits. For every cat who noticed. ...cats too.</p>
+      <a href="./" class="cta-btn">Ask a question about your pet</a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p class="footer-line1">Made with love for every dog who waits. And every cat who noticed.</p>
+    <p class="footer-links">
+      <a href="/about">About</a> &middot;
+      <a href="/privacy">Privacy</a> &middot;
+      <a href="/contact">Contact</a>
+    </p>
+    <p class="footer-copy">&copy; 2026 HachikoLove</p>
+  </footer>
+</body>
+</html>
