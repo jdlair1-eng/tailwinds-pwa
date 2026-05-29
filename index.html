@@ -344,93 +344,6 @@
     .feedback-send-btn:hover { background: var(--primary-dark); }
     .feedback-send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-    /* Sources summary */
-    .sources-summary { margin-top: 22px; }
-    .sources-summary-btn {
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      font-size: 13px;
-      cursor: pointer;
-      padding: 6px 0;
-      font-family: inherit;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .sources-summary-btn:hover { color: var(--primary); }
-    .sources-arrow {
-      display: inline-block;
-      transition: transform 0.15s;
-      font-size: 14px;
-      line-height: 1;
-    }
-    .sources-expanded .sources-arrow { transform: rotate(90deg); }
-    .sources-list {
-      display: none;
-      margin-top: 12px;
-    }
-    .sources-expanded .sources-list { display: block; }
-    .source {
-      padding: 13px 15px;
-      border: 1px solid var(--border);
-      border-radius: 9px;
-      margin-bottom: 9px;
-      cursor: pointer;
-      transition: border-color 0.15s, background 0.15s;
-    }
-    .source:hover { border-color: var(--primary); background: #fafbfc; }
-    .source-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 14px;
-    }
-    .source-meta { min-width: 0; flex: 1; }
-    .source-title { font-weight: 600; color: var(--primary); font-size: 14px; }
-    .source-path {
-      font-family: ui-monospace, "SF Mono", Consolas, monospace;
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-top: 3px;
-      word-break: break-all;
-    }
-    .confidence {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-shrink: 0;
-    }
-    .confidence-bar {
-      width: 80px;
-      height: 7px;
-      background: var(--border);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-    .confidence-fill { height: 100%; transition: width 0.3s; }
-    .confidence-score {
-      font-size: 12px;
-      font-variant-numeric: tabular-nums;
-      color: var(--text-muted);
-      width: 38px;
-      text-align: right;
-    }
-    .source-content {
-      display: none;
-      margin-top: 12px;
-      padding-top: 12px;
-      border-top: 1px solid var(--border);
-      font-size: 13px;
-      white-space: pre-wrap;
-      max-height: 320px;
-      overflow-y: auto;
-      color: var(--text-warm);
-      line-height: 1.5;
-    }
-    .source.expanded .source-content { display: block; }
-    .source.expanded { background: #fafbfc; }
-
     /* Sidebar */
     .sidebar {
       background: var(--card);
@@ -571,13 +484,6 @@
                    placeholder="Tell us more (optional)" autocomplete="off">
             <button class="feedback-send-btn" id="feedback-send" type="button">Send</button>
           </div>
-          <div class="sources-summary" id="sources-summary">
-            <button class="sources-summary-btn" id="sources-toggle" type="button">
-              Answer based on <span id="source-count">0</span> sources
-              <span class="sources-arrow">&#8250;</span>
-            </button>
-            <div class="sources-list" id="sources-list"></div>
-          </div>
         </div>
       </div>
     </div>
@@ -614,10 +520,6 @@
     const $loading        = document.getElementById('loading');
     const $results        = document.getElementById('results');
     const $answer         = document.getElementById('answer');
-    const $sourcesList    = document.getElementById('sources-list');
-    const $sourcesSummary = document.getElementById('sources-summary');
-    const $sourcesToggle  = document.getElementById('sources-toggle');
-    const $sourceCount    = document.getElementById('source-count');
     const $history        = document.getElementById('history');
     const $error          = document.getElementById('error');
     const $offline        = document.getElementById('offline');
@@ -676,13 +578,7 @@
       }[c]));
     }
 
-    function confidenceColor(score) {
-      if (score >= 0.5)  return 'var(--green)';
-      if (score >= 0.35) return 'var(--yellow)';
-      return 'var(--red)';
-    }
-
-    // ---------- Render answer + sources ----------
+    // ---------- Render answer ----------
     function renderResults(data, queryText) {
       const synth = data.synthesis || '(no answer returned)';
       $answer.innerHTML = marked.parse(synth);
@@ -698,35 +594,6 @@
       $feedbackRow.classList.add('visible');
       $feedbackComment.classList.remove('visible');
       $feedbackCommentIn.value = '';
-
-      // Sources (collapsed by default)
-      const results = data.results || [];
-      $sourceCount.textContent = results.length;
-      $sourcesSummary.classList.remove('sources-expanded');
-      $sourcesList.innerHTML = results.map((r, i) => {
-        const score = r.score ?? 0;
-        const pct = Math.min(100, Math.max(0, score * 100));
-        return `
-          <div class="source">
-            <div class="source-header">
-              <div class="source-meta">
-                <div class="source-title">${i+1}. ${escapeHtml(r.title || r.record_id || '?')}</div>
-                <div class="source-path">${escapeHtml(r.file || r.domain || '')}</div>
-              </div>
-              <div class="confidence">
-                <div class="confidence-bar">
-                  <div class="confidence-fill" style="width:${pct}%; background:${confidenceColor(score)}"></div>
-                </div>
-                <div class="confidence-score">${score.toFixed(3)}</div>
-              </div>
-            </div>
-            <div class="source-content">${escapeHtml(r.excerpt || '')}</div>
-          </div>
-        `;
-      }).join('');
-      $sourcesList.querySelectorAll('.source').forEach(el => {
-        el.addEventListener('click', () => el.classList.toggle('expanded'));
-      });
 
       $results.classList.add('visible');
       $results.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -839,9 +706,6 @@
     $ask.addEventListener('click', ask);
     $q.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') { e.preventDefault(); ask(); }
-    });
-    $sourcesToggle.addEventListener('click', () => {
-      $sourcesSummary.classList.toggle('sources-expanded');
     });
     $clearBtn.addEventListener('click', () => {
       if (confirm('Clear all recent questions from this device?')) {
