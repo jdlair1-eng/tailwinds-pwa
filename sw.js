@@ -8,7 +8,7 @@
 //     SWs can't key the Cache API on POST bodies cleanly, so we keep
 //     offline query storage on the page side where it belongs.
 
-const VERSION = "v2.0.0";
+const VERSION = "v3.0.0";
 const SHELL_CACHE = `hachikolove-shell-${VERSION}`;
 const SHELL_URLS = [
   "./",
