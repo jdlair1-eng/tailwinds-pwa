@@ -1,4 +1,4 @@
-// Tailwinds PWA service worker.
+// HachikoLove PWA service worker.
 //
 // Strategy:
 //   - App shell: precached on install, served cache-first for static GETs.
@@ -8,8 +8,8 @@
 //     SWs can't key the Cache API on POST bodies cleanly, so we keep
 //     offline query storage on the page side where it belongs.
 
-const VERSION = "v1.1.0";
-const SHELL_CACHE = `tailwinds-shell-${VERSION}`;
+const VERSION = "v2.0.0";
+const SHELL_CACHE = `hachikolove-shell-${VERSION}`;
 const SHELL_URLS = [
   "./",
   "./index.html",
@@ -29,7 +29,11 @@ self.addEventListener("activate", (event) => {
     caches.keys().then((keys) =>
       Promise.all(
         keys
-          .filter((k) => k.startsWith("tailwinds-shell-") && k !== SHELL_CACHE)
+          .filter(
+            (k) =>
+              (k.startsWith("hachikolove-shell-") || k.startsWith("tailwinds-shell-")) &&
+              k !== SHELL_CACHE
+          )
           .map((k) => caches.delete(k))
       )
     )

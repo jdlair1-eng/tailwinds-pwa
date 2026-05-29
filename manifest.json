@@ -1,7 +1,7 @@
 {
-  "name": "Tailwinds",
-  "short_name": "Tailwinds",
-  "description": "Tailwinds Knowledge Base — natural-language search over the canine care knowledge graph.",
+  "name": "HachikoLove",
+  "short_name": "HachikoLove",
+  "description": "For every dog who waits. Free pet care answers.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
